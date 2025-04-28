@@ -7,8 +7,8 @@ def lake_problem(
         b=0.42,         # Decay parameter for P in lake (0.42 = irreversible)
         q=2.0,          # Recycling exponent
         mean=0.02,      # Mean of natural inflows
-        stdev=0.0017,   # Future utility discount rate
-        delta=0.98,     # Standard deviation of natural inflows
+        stdev=0.0017,   # Standard deviation of natural inflows
+        delta=0.98,     # Future utility discount rate
         alpha=0.4,      # Utility from pollution
         nsamples=100,   # Number of Monte Carlo samples to draw
         steps=100,      # Number of time steps
@@ -68,3 +68,4 @@ def lake_problem(
     inertia = np.sum(np.abs(np.diff(decisions)) > 0.02) / float(nvars - 1)
 
     return max_P, utility, inertia, reliability
+
