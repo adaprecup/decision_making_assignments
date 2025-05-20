@@ -54,6 +54,7 @@ def get_model_for_problem_formulation(problem_formulation_id):
     problem formulations 4 and 5 rely on ArrayOutcomes and thus cannot straightforwardly
     be used in optimizations
 
+
     """
     # Load the model:
     function = DikeNetwork()
