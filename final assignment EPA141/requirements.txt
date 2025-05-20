@@ -29,6 +29,7 @@ httpcore==1.0.8
 httpx==0.28.1
 idna==3.10
 ipykernel==6.29.5
+ipyparallel
 ipython==9.1.0
 ipython_pygments_lexers==1.1.1
 ipywidgets==8.1.6
@@ -122,3 +123,4 @@ webcolors==24.11.1
 webencodings==0.5.1
 websocket-client==1.8.0
 widgetsnbextension==4.0.14
+xlrd
