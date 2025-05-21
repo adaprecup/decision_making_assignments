@@ -32,7 +32,7 @@ class DikeNetwork:
         )
 
         # Load hydrological statistics:
-        self.A = pd.read_excel("./data/hydrology/werklijn_params.xlsx")
+        self.A = pd.read_excel("../data/hydrology/werklijn_params.xlsx")
 
         lowQ, highQ = werklijn_inv([0.992, 0.99992], self.A)
         self.Qpeaks = np.unique(
