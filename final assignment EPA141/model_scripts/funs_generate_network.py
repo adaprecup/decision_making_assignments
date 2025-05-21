@@ -12,7 +12,7 @@ def get_network(plann_steps_max=10):
     """Build network uploading crucial parameters"""
 
     # Upload dike info
-    df = pd.read_excel("./data/dikeIjssel.xlsx", dtype=object)
+    df = pd.read_excel("../data/dikeIjssel.xlsx", dtype=object)
     df = df.set_index("NodeName")
 
     nodes = df.to_dict("index")
@@ -29,17 +29,17 @@ def get_network(plann_steps_max=10):
 
     # Upload fragility curves:
     frag_curves = pd.read_excel(
-        "./data/fragcurves/frag_curves.xlsx", header=None, index_col=0
+        "../data/fragcurves/frag_curves.xlsx", header=None, index_col=0
     ).transpose()
     calibration_factors = pd.read_excel(
-        "./data/fragcurves/calfactors_pf1250.xlsx", index_col=0
+        "../data/fragcurves/calfactors_pf1250.xlsx", index_col=0
     )
 
     # Upload room for the river projects:
     steps = np.array(range(plann_steps_max))
 
     projects = pd.read_excel(
-        "./data/rfr_strategies.xlsx", index_col=0, names=["project name", 0, 1, 2, 3, 4]
+        "../data/rfr_strategies.xlsx", index_col=0, names=["project name", 0, 1, 2, 3, 4]
     )
 
     for n in steps:
@@ -51,11 +51,11 @@ def get_network(plann_steps_max=10):
         G.add_node(f"discount rate {n}", **{"value": 0})
 
     # Upload evacuation policies:
-    G.add_node("EWS", **pd.read_excel("./data/EWS.xlsx").to_dict())
+    G.add_node("EWS", **pd.read_excel("../data/EWS.xlsx").to_dict())
     G.nodes["EWS"]["type"] = "measure"
 
     # Upload muskingum params:
-    Muskingum_params = pd.read_excel("./data/Muskingum/params.xlsx", index_col=0)
+    Muskingum_params = pd.read_excel("../data/Muskingum/params.xlsx", index_col=0)
 
     # Fill network with crucial info:
     for dike in dike_list:
@@ -72,14 +72,14 @@ def get_network(plann_steps_max=10):
         G.nodes[dike]["dikelevel"] = Lookuplin(G.nodes[dike]["f"], 1, 0, 0.5)
 
         # Assign stage-discharge relationships
-        filename = f"./data/rating_curves/{dike}_ratingcurve_new.txt"  # Load file
+        filename = f"../data/rating_curves/{dike}_ratingcurve_new.txt"  # Load file
         rc_array = np.loadtxt(filename)  # Load file into array
         G.nodes[dike]["r"] = rc_array[
             rc_array[:, 0].argsort()
         ]  # Sort on first column before saving
 
         # Assign losses per location:
-        name = f"./data/losses_tables/{dike}_lossestable.xlsx"
+        name = f"../data/losses_tables/{dike}_lossestable.xlsx"
         G.nodes[dike]["table"] = pd.read_excel(name, index_col=0).values
 
         # Assign Muskingum paramters:
@@ -89,7 +89,7 @@ def get_network(plann_steps_max=10):
 
     # The plausible 133 upstream wave-shapes:
     G.nodes["A.0"]["Qevents_shape"] = pd.read_excel(
-        "./data/hydrology/wave_shapes.xls", index_col=0
+        "../data/hydrology/wave_shapes.xls", index_col=0
     )
 
     return G, dike_list, dike_branches, steps
